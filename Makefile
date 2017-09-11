@@ -9,7 +9,7 @@ clean:
 	rm -rf build
 
 build:
-	docker build -t Ingress:latest -f docker/Dockerfile.scratch .
+	docker build -t ingress:latest -f docker/Dockerfile.scratch .
 
 run:
-	docker run -it Ingress
+	docker run -it ingress
