@@ -1,6 +1,6 @@
 
 .PHONY: all
-all: clean
+build-ingress: clean
 	mkdir -p build/
 	GOOS=linux CGO_ENABLED=0 go build -a -installsuffix cgo \
 		-o build/ingress ./ingress
@@ -8,7 +8,7 @@ all: clean
 clean:
 	rm -rf build
 
-build-ingress: all
+all: build-ingress
 	docker build -t ingress:latest -f docker/Dockerfile.scratch .
 
 run:
