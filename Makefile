@@ -8,7 +8,7 @@ all: clean
 clean:
 	rm -rf build
 
-build:
+build-ingress: all
 	docker build -t ingress:latest -f docker/Dockerfile.scratch .
 
 run:
