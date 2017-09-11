@@ -27,10 +27,11 @@ data:
     - protocol: http
       label: outgoing
       dtab: |
-        /srv        => /#/io.l5d.k8s/default/http;
-        /host       => /srv;
-        /svc        => /host;
-        /host/world => /srv/world-v1;
+        /srv                => /#/io.l5d.k8s/default/http;
+        /host               => /srv;
+        /svc                => /host;
+        /host/world         => /srv/world-v1;
+        /domain/insult/www  => /srv/insult;
       interpreter:
         kind: default
         transformers:
@@ -48,10 +49,11 @@ data:
     - protocol: http
       label: incoming
       dtab: |
-        /srv        => /#/io.l5d.k8s/default/http;
-        /host       => /srv;
-        /svc        => /host;
-        /host/world => /srv/world-v1;
+        /srv                => /#/io.l5d.k8s/default/http;
+        /host               => /srv;
+        /svc                => /host;
+        /host/world         => /srv/world-v1;
+        /domain/insult/www  => /srv/insult;
       interpreter:
         kind: default
         transformers:
@@ -59,4 +61,5 @@ data:
       servers:
       - port: 4141
         ip: 0.0.0.0
----
+
+
