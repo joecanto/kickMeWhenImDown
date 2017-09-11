@@ -1,0 +1,1 @@
+We are going to create a few micro services here and deploy them into docker containers
