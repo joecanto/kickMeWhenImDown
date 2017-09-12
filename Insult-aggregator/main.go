@@ -37,7 +37,7 @@ func return_insult() string {
 	}
 
 	randNumber := random(1, 12)
-	// Get color of snake.
+	// set the insult to random
 	c := insult_map[randNumber]
 
 	return c
