@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	aggregatorAddress	= "7999"
+	aggregatorAddress	= ":7999"
 )
 
 func dieIf(err error) {
@@ -24,13 +24,13 @@ func dieIf(err error) {
 
 func main() {
 	http.HandleFunc("/", insultHandler)
-	if err := http.ListenAndServe(":8000", nil); err != nil {
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
 
 func insultHandler(w http.ResponseWriter, r *http.Request){
-	// Set up a connection to the insult engine.
+
 	conn, err := grpc.Dial(aggregatorAddress, grpc.WithInsecure())
 	dieIf(err)
 	defer conn.Close()
@@ -40,5 +40,5 @@ func insultHandler(w http.ResponseWriter, r *http.Request){
 
 	resp, err := proxyClient.GoForIt(context.Background(), request)
 	dieIf(err)
-	fmt.Printf("Insult: %s", resp.Message)
+	fmt.Fprintf(w,"Insult: %s", resp.Message)
 }
