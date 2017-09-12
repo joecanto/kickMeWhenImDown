@@ -30,8 +30,8 @@ data:
         /srv                => /#/io.l5d.k8s/default/http;
         /host               => /srv;
         /svc                => /host;
-        /host/insult-engine => /srv/insult-engine;
         /domain/insult/www  => /srv/insult;
+        /domain/insult-rude/www  => /srv/insult-rude;
       interpreter:
         kind: default
         transformers:
@@ -52,8 +52,8 @@ data:
         /srv                      => /#/io.l5d.k8s/default/http;
         /host                     => /srv;
         /svc                      => /host;
-        /host/insult-engine       => /srv/insult-engine;
         /domain/insult/www        => /srv/insult;
+        /domain/insult-rude/www  => /srv/insult-rude;
       interpreter:
         kind: default
         transformers:
