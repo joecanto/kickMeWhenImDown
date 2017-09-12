@@ -1,16 +1,36 @@
-// forms.go
+
 package main
 
 import (
-	"io"
-	"net/http"
+	proto "github.com/joecanto/kickMeWhenImDown/proto"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	"fmt"
+	"os"
 )
 
-func insult(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Get lost - loser!")
+const (
+	address	= "7999"
+)
+
+func dieIf(err error) {
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
+	}
 }
 
 func main() {
-	http.HandleFunc("/", insult)
-	http.ListenAndServe(":8000", nil)
+	// Set up a connection to the server.
+	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	dieIf(err)
+	defer conn.Close()
+
+	proxyClient := proto.NewInsultClient(conn)
+	request := &proto.InsultRequest{}
+
+	resp, err := proxyClient.GoForIt(context.Background(), request)
+	dieIf(err)
+	fmt.Printf("Insult: %s", resp.Message)
+
 }

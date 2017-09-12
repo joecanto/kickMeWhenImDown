@@ -2,6 +2,6 @@ FROM scratch
 
 COPY ./build/aggregator /usr/local/bin/aggregator
 
-EXPOSE 8080
+EXPOSE 7999
 
 CMD ["/usr/local/bin/aggregator"]
