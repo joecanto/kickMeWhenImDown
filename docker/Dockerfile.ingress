@@ -2,6 +2,6 @@ FROM scratch
 
 COPY ./build/ingress /usr/local/bin/Ingress
 
-EXPOSE 8000
+EXPOSE 8080
 
 CMD ["/usr/local/bin/Ingress"]
