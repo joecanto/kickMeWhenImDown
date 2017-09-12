@@ -30,7 +30,7 @@ data:
         /srv                => /#/io.l5d.k8s/default/http;
         /host               => /srv;
         /svc                => /host;
-        /host/world         => /srv/world-v1;
+        /host/insult-engine => /srv/insult-engine;
         /domain/insult/www  => /srv/insult;
       interpreter:
         kind: default
@@ -49,11 +49,11 @@ data:
     - protocol: http
       label: incoming
       dtab: |
-        /srv                => /#/io.l5d.k8s/default/http;
-        /host               => /srv;
-        /svc                => /host;
-        /host/world         => /srv/world-v1;
-        /domain/insult/www  => /srv/insult;
+        /srv                      => /#/io.l5d.k8s/default/http;
+        /host                     => /srv;
+        /svc                      => /host;
+        /host/insult-engine       => /srv/insult-engine;
+        /domain/insult/www        => /srv/insult;
       interpreter:
         kind: default
         transformers:

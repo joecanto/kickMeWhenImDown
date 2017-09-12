@@ -2,9 +2,6 @@
 package main
 
 import (
-	proto "github.com/joecanto/kickMeWhenImDown/proto"
-	"golang.org/x/net/context"
-	"google.golang.org/grpc"
 	"fmt"
 	"os"
 	"net/http"
@@ -23,22 +20,17 @@ func dieIf(err error) {
 }
 
 func main() {
-	http.HandleFunc("/", insultHandler)
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	mux := http.NewServeMux();
+	mux.HandleFunc("/", insultHandler)
+
+	if err := http.ListenAndServe(":8080", mux); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
 
 func insultHandler(w http.ResponseWriter, r *http.Request){
+	log.Printf("Received request from load balancer")
 
-	conn, err := grpc.Dial(aggregatorAddress, grpc.WithInsecure())
-	dieIf(err)
-	defer conn.Close()
 
-	proxyClient := proto.NewInsultClient(conn)
-	request := &proto.InsultRequest{}
 
-	resp, err := proxyClient.GoForIt(context.Background(), request)
-	dieIf(err)
-	fmt.Fprintf(w,"Insult: %s", resp.Message)
 }

@@ -15,7 +15,7 @@ spec:
       dnsPolicy: ClusterFirst
       containers:
       - name: service
-        image: us.gcr.io/hackathon-179114/ingress:0.0.4
+        image: us.gcr.io/hackathon-179114/ingress:0.0.5
         env:
         - name: NODE_NAME
           valueFrom:
@@ -60,7 +60,7 @@ spec:
       dnsPolicy: ClusterFirst
       containers:
       - name: service
-        image: us.gcr.io/hackathon-179114/aggregator:0.0.2
+        image: us.gcr.io/hackathon-179114/aggregator:0.0.3
         env:
         - name: POD_IP
           valueFrom:
@@ -79,5 +79,5 @@ spec:
     app: insult-engine
   clusterIP: None
   ports:
-  - name: tcp
+  - name: http
     port: 7999

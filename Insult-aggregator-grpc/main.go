@@ -1,46 +1,48 @@
 
+
 package main
 
 import (
 	"math/rand"
-	"net/http"
 	"time"
+	"google.golang.org/grpc/reflection"
+	"net"
 	"os"
 	"log"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	proto "github.com/joecanto/kickMeWhenImDown/proto"
 	"fmt"
-	"encoding/json"
 )
 
-type Insult struct {
-	Content string
-	CreatedAt time.Time
+type server struct{}
+
+func (s *server) GoForIt(ctx context.Context, in *proto.InsultRequest) (*proto.InsultResponse, error) {
+	return &proto.InsultResponse{ Message: return_insult()}, nil
 }
 
-func main() {
-
-	mux := http.NewServeMux();
-	mux.HandleFunc("/", insultHandler)
-
-	if err := http.ListenAndServe(":7999", mux); err != nil {
-		log.Fatal("ListenAndServe:", err)
+func dieIf(err error) {
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
 	}
 }
 
-func insultHandler(w http.ResponseWriter, r *http.Request){
-	log.Printf("Received request from ingress")
+func main() {
+	addr := ":7999"
 
-	insult := Insult{}
-
-	insult.CreatedAt = time.Now().Local()
-	insult.Content = return_insult()
-
-	insultJson, err := json.Marshal(insult)
+	lis, err := net.Listen("tcp", addr)
 	dieIf(err)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
+	fmt.Println("starting gRPC server on", addr)
 
-	w.Write(insultJson)
+	s := grpc.NewServer()
+	proto.RegisterInsultServer(s, &server{})
+	// Register reflection service on gRPC server.
+	reflection.Register(s)
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }
 
 
@@ -71,11 +73,4 @@ func return_insult() string {
 func random(min, max int) int {
 	rand.Seed(time.Now().Unix())
 	return rand.Intn(max - min) + min
-}
-
-func dieIf(err error) {
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
-	}
 }
