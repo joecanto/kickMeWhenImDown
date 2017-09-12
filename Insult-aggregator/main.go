@@ -4,7 +4,6 @@
 package main
 
 import (
-	"io"
 	"math/rand"
 	"time"
 	"google.golang.org/grpc/reflection"
