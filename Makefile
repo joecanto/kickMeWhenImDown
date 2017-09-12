@@ -1,17 +1,18 @@
 
-build-ingress:
+ingress:
 	mkdir -p build/
 	GOOS=linux CGO_ENABLED=0 go build -a -installsuffix cgo \
-		-o build/ingress ./ingress
+		-o build/ingress ./Ingress
 
-build-aggregator:
+aggregator:
 	mkdir -p build/
 	GOOS=linux CGO_ENABLED=0 go build -a -installsuffix cgo \
-		-o build/aggregator ./aggregator
+		-o build/aggregator ./Aggregator
 
 clean:
 	rm -rf build
 
-all: clean build-ingress build-aggregator
+.PHONY: all
+all: clean aggregator ingress
     docker build -t aggregator:latest -f docker/Dockerfile.aggregator .
 	docker build -t ingress:latest -f docker/Dockerfile.ingress .
