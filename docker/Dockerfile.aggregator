@@ -1,6 +1,6 @@
 FROM scratch
 
-COPY ./build/aggregator /usr/local/bin/aggregator
+COPY ./build/insult-engine /usr/local/bin/aggregator
 
 EXPOSE 7999
 
