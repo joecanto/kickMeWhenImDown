@@ -7,10 +7,12 @@ import (
 	"google.golang.org/grpc"
 	"fmt"
 	"os"
+	"net/http"
+	"log"
 )
 
 const (
-	address	= "7999"
+	aggregatorAddress	= "7999"
 )
 
 func dieIf(err error) {
@@ -21,8 +23,15 @@ func dieIf(err error) {
 }
 
 func main() {
-	// Set up a connection to the server.
-	conn, err := grpc.Dial(address, grpc.WithInsecure())
+	http.HandleFunc("/", insultHandler)
+	if err := http.ListenAndServe(":8000", nil); err != nil {
+		log.Fatal("ListenAndServe:", err)
+	}
+}
+
+func insultHandler(w http.ResponseWriter, r *http.Request){
+	// Set up a connection to the insult engine.
+	conn, err := grpc.Dial(aggregatorAddress, grpc.WithInsecure())
 	dieIf(err)
 	defer conn.Close()
 
@@ -32,5 +41,4 @@ func main() {
 	resp, err := proxyClient.GoForIt(context.Background(), request)
 	dieIf(err)
 	fmt.Printf("Insult: %s", resp.Message)
-
 }
