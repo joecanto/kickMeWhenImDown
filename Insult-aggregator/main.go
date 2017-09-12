@@ -4,21 +4,40 @@
 package main
 
 import (
-	"io"
-	"net/http"
 	"math/rand"
 	"time"
+	"google.golang.org/grpc/reflection"
+	"net"
+	"log"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
+	pb "github.com/joecanto/kickMeWhenImDown/proto"
 )
 
-func insult(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, return_insult())
+const (
+	port = ":8000"
+)
+
+type server struct{}
+
+func (s *server) GoForIt(ctx context.Context, in *pb.InsultRequest) (*pb.InsultResponse, error) {
+	return &pb.InsultResponse{return_insult()}, nil
 }
 
 func main() {
-	http.HandleFunc("/", insult)
-	http.ListenAndServe(":8000", nil)
-
+	lis, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatalf("failed to listen: %v", err)
+	}
+	s := grpc.NewServer()
+	pb.RegisterInsultServer(s, &server{})
+	// Register reflection service on gRPC server.
+	reflection.Register(s)
+	if err := s.Serve(lis); err != nil {
+		log.Fatalf("failed to serve: %v", err)
+	}
 }
+
 
 func return_insult() string {
 	insult_map := map[int]string{
