@@ -1,0 +1,7 @@
+FROM scratch
+
+COPY ./build/aggregator /usr/local/bin/aggregator
+
+EXPOSE 8080
+
+CMD ["/usr/local/bin/aggregator"]
