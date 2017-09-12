@@ -1,6 +1,5 @@
 
 
-// forms.go
 package main
 
 import (
@@ -11,7 +10,7 @@ import (
 	"log"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	pb "github.com/joecanto/kickMeWhenImDown/proto"
+	proto "github.com/joecanto/kickMeWhenImDown/proto"
 )
 
 const (
@@ -20,8 +19,8 @@ const (
 
 type server struct{}
 
-func (s *server) GoForIt(ctx context.Context, in *pb.InsultRequest) (*pb.InsultResponse, error) {
-	return &pb.InsultResponse{return_insult()}, nil
+func (s *server) GoForIt(ctx context.Context, in *proto.InsultRequest) (*proto.InsultResponse, error) {
+	return &proto.InsultResponse{ Message: return_insult()}, nil
 }
 
 func main() {
@@ -30,7 +29,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterInsultServer(s, &server{})
+	proto.RegisterInsultServer(s, &server{})
 	// Register reflection service on gRPC server.
 	reflection.Register(s)
 	if err := s.Serve(lis); err != nil {
