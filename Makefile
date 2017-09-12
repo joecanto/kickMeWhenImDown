@@ -7,7 +7,7 @@ build-ingress:
 build-aggregator:
 	mkdir -p build/
 	GOOS=linux CGO_ENABLED=0 go build -a -installsuffix cgo \
-		-o build/ingress ./ingress
+		-o build/Ingress ./Ingress
 
 clean:
 	rm -rf build

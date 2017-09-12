@@ -1,7 +1,7 @@
 FROM scratch
 
-COPY ./build/ingress /usr/local/bin/ingress
+COPY ./build/ingress /usr/local/bin/Ingress
 
 EXPOSE 8080
 
-CMD ["/usr/local/bin/ingress"]
+CMD ["/usr/local/bin/Ingress"]

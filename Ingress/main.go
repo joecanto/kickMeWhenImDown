@@ -1,20 +1,16 @@
 // forms.go
 package main
+
 import (
-	"fmt"
+	"io"
 	"net/http"
-	"log"
 )
 
-type Putdown struct {
-	insult string
+func insult(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "Get lost - loser!")
 }
 
 func main() {
-	http.HandleFunc("/insult", func(w http.ResponseWriter, r *http.Request) {
-
-		fmt.Fprintf(w, "Hello, everyone")
-	})
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
-	}
+	http.HandleFunc("/", insult)
+	http.ListenAndServe(":8000", nil)
+}
