@@ -15,7 +15,7 @@ spec:
       dnsPolicy: ClusterFirst
       containers:
       - name: service
-        image: us.gcr.io/hackathon-179114/aggregator:0.1.0
+        image: us.gcr.io/hackathon-179114/aggregator:0.1.1
         env:
         - name: POD_IP
           valueFrom:
