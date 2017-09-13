@@ -30,7 +30,7 @@ data:
         /srv                => /#/io.l5d.k8s/default/http;
         /host               => /srv;
         /svc                => /host;
-        /domain/insult/www  => /srv/insult;
+        /domain/insult-now/www  => /srv/insult-now;
         /domain/insult-rude/www  => /srv/insult-rude;
       interpreter:
         kind: default
@@ -52,7 +52,7 @@ data:
         /srv                      => /#/io.l5d.k8s/default/http;
         /host                     => /srv;
         /svc                      => /host;
-        /domain/insult/www        => /srv/insult;
+        /domain/insult-now/www        => /srv/insult-now;
         /domain/insult-rude/www  => /srv/insult-rude;
       interpreter:
         kind: default
