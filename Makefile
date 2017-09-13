@@ -1,12 +1,12 @@
 
 build-ingress:
 	mkdir -p build/
-	GOOS=darwin CGO_ENABLED=0 go build -a -installsuffix cgo \
+	GOOS=linux CGO_ENABLED=0 go build -a -installsuffix cgo \
 		-o build/ingress ./Ingress
 
 build-aggregator:
 	mkdir -p build/
-	GOOS=darwin CGO_ENABLED=0 go build -a -installsuffix cgo \
+	GOOS=linux CGO_ENABLED=0 go build -a -installsuffix cgo \
 		-o build/aggregator ./Aggregator
 
 clean:
