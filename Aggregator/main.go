@@ -29,6 +29,18 @@ func main() {
 func insultHandler(w http.ResponseWriter, r *http.Request){
 	log.Printf("Received request from ingress")
 
+	timeouts, ok := r.URL.Query()["setTimeout"]
+
+	if ok || len(timeouts) == 1 {
+		if timeouts[0] == "long"{
+			log.Printf("Sleeping for %s seconds", 6)
+			time.Sleep(time.Second * 6)
+		} else {
+			log.Printf("Sleeping for %s seconds", 3)
+			time.Sleep(time.Second * 3)
+		}
+	}
+
 	insult := Insult{}
 
 	insult.CreatedAt = time.Now().Local()
