@@ -14,5 +14,5 @@ clean:
 
 .PHONY: all
 all: clean aggregator ingress
-    docker build -t aggregator:latest -f docker/Dockerfile.aggregator .
+	docker build -t aggregator:latest -f docker/Dockerfile.aggregator .
 	docker build -t ingress:latest -f docker/Dockerfile.ingress .
